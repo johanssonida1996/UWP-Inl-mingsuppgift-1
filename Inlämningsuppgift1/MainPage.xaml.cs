@@ -1,10 +1,13 @@
 ﻿using Inlämningsuppgift1.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
+using System.Xml;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -27,11 +30,8 @@ namespace Inlämningsuppgift1
        
         public MainPage()
         {
-            this.InitializeComponent();
-
-            //OpenFilePickerAsync().GetAwaiter();
-            //CreateFileAsync().GetAwaiter();
-            //WriteToFileAsync().GetAwaiter();
+            this.InitializeComponent();            
+                        
         }
 
         public ContentList contentList = new ContentList();     
@@ -54,81 +54,63 @@ namespace Inlämningsuppgift1
 
             if (file != null)
             {
-                // Application now has read/write access to the picked file
-                this.textblock.Text = "Picked file: " + file.ContentType;
-
+                
                 if (file.ContentType == "application/vnd.ms-excel")
                 {
                     string text = await Windows.Storage.FileIO.ReadTextAsync(file);
 
-                    this.textblock.Text = text;
-
+                   
                     try
                     {
                         contentList.Add(new Content($"Texten i filen är följande: {text}"));
                     }
                     catch { }
                 }
+               
                 else if (file.ContentType == "text/xml")
                 {
-                    //string text = await Windows.Storage.FileIO.ReadTextAsync(file);
-                    //this.textblock.Text = text;
-                    //this.textblock.Text = file.Path;
+                    string text = await Windows.Storage.FileIO.ReadTextAsync(file);
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.LoadXml(text);
 
-                    //using XmlTextReader xml = new XmlTextReader(Convert.ToString(file.Path));
 
-                    //xml.Read();
-
-                    //while (xml.Read())
-                    //{
-                    //    // Console.WriteLine(xml.LocalName);
-                    //    // Console.WriteLine(xml.Name);
-                    //    //Console.WriteLine(xml.NodeType);
-                    //    //onsole.WriteLine(xml.Value);
-
-                    //    XmlNodeType ntype = xml.NodeType;
-
-                    //    if (ntype == XmlNodeType.Element)
-                    //    {
-                    //        this.textblock.Text = xml.Name;
-                    //        //if (xml.Name == "book")
-                    //        //{
-                    //        //    Console.WriteLine(xml.Name);
-                    //        //    Console.WriteLine("Author: " + xml.GetAttribute("author"));
-                    //        //}
-                    //    }
-                    //    if (ntype == XmlNodeType.Text)
-                    //    {
-                    //        this.textblock.Text = xml.Value;
-                    //        //Console.WriteLine("Value: " + xml.Value);
-                    //    }
+                    foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes)
+                    {
+                        string textoutput = node.InnerText; //or loop through its children as well
+                        try
+                        {
+                            contentList.Add(new Content($"{textoutput}"));
+                        }
+                        catch { }
+                    }
                 }
-                //else if (file.ContentType == "application/json")
-                //{
-                //    var path = file.Path;
-                //    this.textblock.Text = file.Path;
 
-                //    using StreamReader reader = new StreamReader(path);
-                //    var json = reader.ReadToEnd();
-                //    this.textblock.Text = json;
-                //    try
-                //    {
-                //        contentList.Add(new Content($"Texten i filen är följande: {json}"));
-                //    }
-                //    catch { }
+                else if (file.ContentType == "application/json")
+                {
+                    var path = file.Path;
+                    
+                    string text = await Windows.Storage.FileIO.ReadTextAsync(file);
+                    var obj = JsonConvert.DeserializeObject<dynamic>(text);
 
-                //}                
+                    try
+                    {
+                        contentList.Add(new Content($"Texten i filen är följande: {obj.message}"));
+                    }
+                    catch { }
+
+                }
+                }
+                else
+                {
+                    this.textblock.Text = "Operation cancelled.";
+                }
+
+
             }
-            else
-            {
-                this.textblock.Text = "Operation cancelled.";
-            }
-
 
         }
-
     }
-}  
 
-    
+
+
 

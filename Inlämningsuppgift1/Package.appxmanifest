@@ -4,7 +4,8 @@
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
+  xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
+  IgnorableNamespaces="uap mp uap3">
 
   <Identity
     Name="277731d1-584f-4b27-8bad-5f04df76dc14"
@@ -51,6 +52,7 @@
 						<uap:FileType>.doc</uap:FileType>
 						<uap:FileType>.xls</uap:FileType>
 						<uap:FileType>.xml</uap:FileType>
+						<uap:FileType>.json</uap:FileType>
 					</uap:SupportedFileTypes>
 				</uap:FileTypeAssociation>
 			</uap:Extension>
@@ -61,6 +63,9 @@
 
   <Capabilities>
 	  <Capability Name="internetClient" />
-	  <uap:Capability Name="documentsLibrary"/>	  
+	  <uap:Capability Name="documentsLibrary"/>
+	  <uap:Capability Name="picturesLibrary"/>
+	  <uap3:Capability Name="remoteSystem"/>
+	  <uap:Capability Name="removableStorage"/>	  
   </Capabilities>
 </Package>

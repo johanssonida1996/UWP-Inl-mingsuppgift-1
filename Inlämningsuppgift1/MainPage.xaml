@@ -13,7 +13,7 @@
             <RowDefinition Height="1*" />
             <RowDefinition Height="9*"/>
         </Grid.RowDefinitions>
-        <Button x:Name="openFileExplorerBtn" Click="openFileExplorerBtn_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000" Height="100" Margin="0,20,0,0" />
+        <Button x:Name="openFileExplorerBtn" Click="openFileExplorerBtn_Click" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,20,0,0" Background="#330A955C" Content="Choose type" FontSize="35" />
         <TextBlock x:Name="textblock" Width="500" Height="500"/>
 
         <ListView Grid.Row="1" x:Name="lvWeatherList" ItemsSource="{x:Bind contentList}" Margin="0, 20">
