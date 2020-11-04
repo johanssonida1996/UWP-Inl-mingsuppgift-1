@@ -90,11 +90,11 @@ namespace Inlämningsuppgift1
                     var path = file.Path;
                     
                     string text = await Windows.Storage.FileIO.ReadTextAsync(file);
-                    var obj = JsonConvert.DeserializeObject<dynamic>(text);
+                    var obj = JsonConvert.DeserializeObject<dynamic>(text); 
 
                     try
                     {
-                        contentList.Add(new Content($"Texten i filen är följande: {obj.message}"));
+                        contentList.Add(new Content($"Texten i filen är följande: {obj.NumberOfItems}"));
                     }
                     catch { }
 
