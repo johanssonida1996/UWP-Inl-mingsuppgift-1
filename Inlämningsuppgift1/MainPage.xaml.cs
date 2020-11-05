@@ -76,7 +76,7 @@ namespace Inlämningsuppgift1
 
                     foreach (XmlNode node in xmlDoc.DocumentElement.ChildNodes)
                     {
-                        string textoutput = node.InnerText; //or loop through its children as well
+                        string textoutput = node.InnerText;
                         try
                         {
                             contentList.Add(new Content($"{textoutput}"));
@@ -94,7 +94,7 @@ namespace Inlämningsuppgift1
 
                     try
                     {
-                        contentList.Add(new Content($"Texten i filen är följande: {obj.NumberOfItems}"));
+                        contentList.Add(new Content($"Texten i filen är följande: {obj.message}"));
                     }
                     catch { }
 

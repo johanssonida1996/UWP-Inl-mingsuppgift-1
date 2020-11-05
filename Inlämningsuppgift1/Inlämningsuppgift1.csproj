@@ -133,7 +133,6 @@
     <Compile Include="Models\Content.cs" />
     <Compile Include="Models\ContentList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\UWPServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
